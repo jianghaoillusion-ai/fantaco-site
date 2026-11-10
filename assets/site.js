@@ -1,15 +1,11 @@
-(()=>{const t=document.querySelector('.nav-toggle'),n=document.getElementById('site-nav');
-if(t)t.addEventListener('click',()=>{const o=n.classList.toggle('open');t.setAttribute('aria-expanded',o)});
-document.querySelectorAll('[data-tabs]').forEach(w=>{const tabs=[...w.querySelectorAll('[role=tab]')];
-tabs.forEach(b=>b.addEventListener('click',()=>{tabs.forEach(x=>{const s=x===b;x.setAttribute('aria-selected',s);document.getElementById(x.getAttribute('aria-controls')).hidden=!s})}))});
-document.querySelectorAll('.yt').forEach(y=>{y.querySelector('a').addEventListener('click',e=>{e.preventDefault();const f=document.createElement('iframe');
-f.src='https://www.youtube-nocookie.com/embed/'+y.dataset.yt+'?autoplay=1&rel=0';f.title=y.dataset.title;f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';f.allowFullscreen=true;y.innerHTML='';y.appendChild(f)})});
-const lb=document.querySelector('.lightbox');if(lb&&lb.showModal){const im=lb.querySelector('img');
-document.querySelectorAll('[data-lightbox]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();im.src=a.href;im.alt=a.querySelector('img').alt;lb.showModal()}));
-lb.addEventListener('click',e=>{if(e.target!==im)lb.close()});}
-document.querySelectorAll('[data-countdown]').forEach(c=>{const end=+c.dataset.countdown*1000,p=v=>String(v).padStart(2,'0');
-const tick=()=>{let d=Math.max(0,Math.floor((end-Date.now())/1000));c.querySelector('[data-d]').textContent=p(Math.floor(d/86400));c.querySelector('[data-h]').textContent=p(Math.floor(d%86400/3600));c.querySelector('[data-m]').textContent=p(Math.floor(d%3600/60));c.querySelector('[data-s]').textContent=p(d%60);if(d>0)setTimeout(tick,1000)};tick()});
-document.querySelectorAll('.flip').forEach(f=>{f.addEventListener('click',e=>{if(e.target.closest('a'))return;f.classList.toggle('on')});f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}})});
-if('IntersectionObserver'in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('main section>.wrap>*,main section.block>*,main .info-cards>li,main .flip,main .media-card,main .post>*').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight){el.classList.add('reveal');io.observe(el)}});}
+(()=>{const h=document.querySelector('.hd'),b=document.querySelector('.burger');
+b&&b.addEventListener('click',()=>{const o=h.classList.toggle('open');b.setAttribute('aria-expanded',o)});
+const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'}):null;
+document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
+document.querySelectorAll('.tip,.tile[tabindex]').forEach(el=>{el.addEventListener('click',()=>el.classList.toggle('on'));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.classList.toggle('on')}})});
+document.querySelectorAll('.vid[data-yt]').forEach(v=>{const go=()=>{if(v.querySelector('iframe'))return;const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+v.dataset.yt+'?autoplay=1&rel=0&playsinline=1';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.title=v.getAttribute('aria-label')||'影片';v.appendChild(f)};v.addEventListener('click',go);v.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})});
+document.querySelectorAll('.tabs').forEach(t=>{const bs=t.querySelectorAll('button');bs.forEach(x=>x.addEventListener('click',()=>{bs.forEach(y=>{y.setAttribute('aria-selected',y===x);document.getElementById(y.getAttribute('aria-controls')).hidden=y!==x})}))});
+const d=document.createElement('dialog');d.className='lb';d.innerHTML='<button aria-label="關閉">×</button><img alt="">';document.body.appendChild(d);
+const di=d.querySelector('img');d.querySelector('button').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()});
+document.querySelectorAll('a[data-lb]').forEach(a=>a.addEventListener('click',e=>{if(!d.showModal)return;e.preventDefault();di.src=a.href;di.alt=a.querySelector('img')?.alt||'';d.showModal()}));
 })();
