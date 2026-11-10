@@ -15,4 +15,10 @@ const close=()=>{lb.classList.remove('open');document.body.style.overflow='';im.
 lb.querySelector('.x').onclick=close;lb.querySelector('.p').onclick=()=>show(i-1);lb.querySelector('.n').onclick=()=>show(i+1);
 lb.addEventListener('click',e=>{if(e.target===lb)close()});addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1)});
 let sx=0;lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)show(i+(dx<0?1:-1))});
+
+// lazy videos: play when visible (reels) / on hover (cards)
+const lv=v=>{if(!v.src&&v.dataset.src){v.src=v.dataset.src}};
+const reels=document.querySelectorAll('.rc-vfeat video');
+if('IntersectionObserver'in window&&!rm){const io3=new IntersectionObserver(es=>es.forEach(x=>{const v=x.target;if(x.isIntersecting){lv(v);v.play().catch(()=>{})}else v.pause()}),{threshold:.25});reels.forEach(v=>io3.observe(v))}
+if(matchMedia('(hover:hover)').matches&&!rm)document.querySelectorAll('.rc-card').forEach(c=>{const v=c.querySelector('video');if(!v)return;c.addEventListener('mouseenter',()=>{lv(v);v.play().then(()=>c.classList.add('play')).catch(()=>{})});c.addEventListener('mouseleave',()=>{c.classList.remove('play');v.pause()})});
 })();
