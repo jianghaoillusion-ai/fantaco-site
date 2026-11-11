@@ -257,3 +257,6 @@ dialog.lb[open]{animation:pop .35s var(--ease)}@keyframes pop{from{opacity:0;tra
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* perf: skip layout of off-screen blocks */
+html:not(.cv-off) main>section:not(:first-child),html:not(.cv-off) main>.wide,html:not(.cv-off) .ft{content-visibility:auto;contain-intrinsic-size:auto 900px}

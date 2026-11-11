@@ -1,4 +1,5 @@
-(()=>{const h=document.querySelector('.hd'),b=document.querySelector('.burger');
+(()=>{const R=document.documentElement,cvOff=()=>R.classList.add('cv-off');if(location.hash.length>1)cvOff();addEventListener('hashchange',cvOff);document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href*="#"]');if(a&&a.hash.length>1)cvOff()},true);
+const h=document.querySelector('.hd'),b=document.querySelector('.burger');
 b&&b.addEventListener('click',()=>{const o=h.classList.toggle('open');b.setAttribute('aria-expanded',o)});
 const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'}):null;
 document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('in'));
