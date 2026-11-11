@@ -1,5 +1,5 @@
 (()=>{const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const v=document.querySelector('.rc-hero video');if(v&&rm){v.removeAttribute('autoplay');v.pause()}
+const v=document.querySelector('.rc-hero video');if(v&&v.dataset.src&&!rm){const go=()=>setTimeout(()=>{v.src=v.dataset.src;v.autoplay=true;const p=v.play();p&&p.catch(()=>{})},300);document.readyState==='complete'?go():addEventListener('load',go,{once:true})}
 if('IntersectionObserver'in window&&!rm){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{rootMargin:'0px 0px -6% 0px'});document.querySelectorAll('.rc-fx').forEach(el=>io.observe(el))}else document.querySelectorAll('.rc-fx').forEach(el=>el.classList.add('on'));
 // count up
 const fmt=n=>n.toLocaleString('en-US');const cnt=b=>{const t=+b.dataset.to,d=1600,s=performance.now(),suf=b.querySelector('i');const tx=document.createTextNode('0');b.prepend(tx);

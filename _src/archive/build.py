@@ -4,7 +4,7 @@ Usage: python3 _src/archive/build.py   (run from anywhere)"""
 import json, html, os, pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
-V = '4'
+V = '5'
 cfg = json.loads((HERE / 'editions.json').read_text())
 LAY = (HERE / 'layout.html').read_text()
 FOLLOW = (HERE / 'pages' / '_follow.html').read_text()
@@ -61,7 +61,7 @@ mvh = (f'''<section class="rc-mv" aria-labelledby="mvh"><div class="rc-w"><h2 id
 <div class="vid rc-fx" data-yt="{mv["yt"]}" role="button" tabindex="0" aria-label="播放 {e(mv["title"])}"><img src="https://i.ytimg.com/vi/{mv["yt"]}/maxresdefault.jpg" alt="{e(mv["title"])}" loading="lazy" width="1280" height="720"><span class="play"></span></div></div></section>''') if mv else ''
 main = f'''<section class="rc-hero" aria-label="歷屆回顧">
  <img class="rc-poster" src="{A}{h["poster"]}" alt="" fetchpriority="high">
- <video autoplay muted loop playsinline preload="auto" poster="{A}{h["poster"]}" aria-hidden="true"><source src="{A}{h["video"]}" type="video/mp4"></video>
+ <video muted loop playsinline preload="none" poster="{A}{h["poster"]}" data-src="{A}{h["video"]}" aria-hidden="true"></video>
  <div class="rc-hero-in"><p class="rc-eyebrow">FANTACO 魔幻藝術節</p><h1>歷屆回顧</h1></div>
  <a class="rc-cue" href="#pick" aria-label="選擇屆別"></a>
 </section>
